@@ -1,0 +1,68 @@
+{
+  "name": "me",
+  "version": "0.0.1",
+  "description": "My personal website",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wufe/me.git"
+  },
+  "author": "Simone Bembi <simone.bembi@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wufe/me/issues"
+  },
+  "homepage": "https://github.com/Wufe/me#readme",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
+  },
+  "devDependencies": {
+    "npm-run-all": "^3.1.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "bundle-loader": "^0.5.4",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.5.0",
+    "eslint-import-resolver-webpack": "^0.6.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-react": "^6.2.2",
+    "eslint-watch": "^2.1.14",
+    "express": "^4.14.0",
+    "file-loader": "^0.9.0",
+    "jquery": "^3.1.0",
+    "moment": "^2.15.0",
+    "node-sass": "^3.10.0",
+    "npm-run-all": "^3.1.0",
+    "q": "^1.4.1",
+    "react": "^15.3.1",
+    "react-addons-css-transition-group": "^15.3.1",
+    "react-bootstrap": "^0.30.3",
+    "react-cookie": "^0.4.8",
+    "react-dom": "^15.3.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0",
+    "redux-immutable-state-invariant": "^1.2.3",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.1.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
+  }
+}

@@ -1,0 +1,28 @@
+version: '2'
+services:
+  app:
+    image: busybox
+    volumes:
+      - ../../../../src/backend:/app
+  db:
+    image: mysql:5.7
+    env_file:
+      - ../../../dev.env
+    ports:
+      - 3322:3306
+    volumes:
+      - ../../../../mysql_data:/var/lib/mysql
+      - ../../configuration/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  php:
+    build:
+      context: ../../../../
+      dockerfile: environment/docker/images/php70/Dockerfile
+    volumes_from:
+      - app
+    tty: true
+    links:
+      - db:db
+      - redis:redis
+    env_file:
+      - ../../../dev.env
+    command: php-fpm
