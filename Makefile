@@ -60,7 +60,8 @@ development:
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
 	${INFO} "Migrating database.."
 	${CMD} docker exec -it $(APP_NAME)_php_1 php /app/artisan migrate
-	${SUCCESS} "Ready."
+	${INFO} "Starting now webpack routine.."
+	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack:watch -s
 
 test:
 	# Requires development environment up and running
