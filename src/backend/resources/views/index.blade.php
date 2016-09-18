@@ -152,6 +152,7 @@
                             <br />
                             <span class="subtitle">{{ $quote }}</span>
                         </div>
+                        <div id="app"></div>
 
                         <!-- <div class="links">
                             <a href="https://laravel.com/docs">Documentation</a>
@@ -164,5 +165,7 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript" src="assets/javascript/main.bundle.js"></script>
+        <script type="text/javascript" src="assets/javascript/vendor.bundle.js"></script>
     </body>
 </html>

@@ -13,14 +13,21 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-Route::get('/', function () {
-    return view('index', [
+function mainView(){
+	return view('index', [
     	"quote" => Inspiring::quote(),
     	"me"	=> [
     		"name"		=> "Piergiorgio",
     		"surname"	=> "Rabarbo"
     	]
     ]);
+}
+
+Route::get('/', function () {
+    return mainView();
+});
+Route::get('/test', function () {
+    return mainView();
 });
 Auth::routes();
 

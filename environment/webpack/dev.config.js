@@ -3,15 +3,15 @@ var path = require( 'path' );
 var debug = true;
 
 module.exports = {
-    context: path.join( __dirname, '..' ),
-    devtool: "inline-sourcemap" : null,
+    context: path.join( __dirname, '..', '..' ),
+    devtool: "inline-sourcemap", // null if not in debug
     entry: {
-        main: "./src/index.js",
-        vendor: [ 'react', 'react-dom', 'react-router', 'radium', 'moment', 'jquery' ]
+        main: "./src/frontend/index.js",
+        vendor: [ 'react', 'react-dom', 'react-router', 'moment', 'jquery' ]
     },
     output: {
         publicPath: "/assets/javascript/",
-        path: path.join( __dirname, '..', 'backend', 'public', 'assets', 'javascript' ), //__dirname + "/../Server/public/assets/javascript",
+        path: path.join( 'src', 'backend', 'public', 'assets', 'javascript' ),
         filename: "[name].bundle.js",
         chunkFilename: '[name]-chunk.js'
     },
@@ -37,11 +37,9 @@ module.exports = {
             }
         ]
     },
-    plugins: debug ? [
-        //new webpack.optimize.CommonsChunkPlugin( "signup-route.bundle.js", ["signup-component", "main"])
-    ] : [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true })
+    plugins: [
+        // new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.OccurenceOrderPlugin(),
+        // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true })
     ]
 }
