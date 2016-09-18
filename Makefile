@@ -51,6 +51,7 @@ DOCKER_RUN := docker run -it --rm
 NPM_INSTALL_ROOT := $(DOCKER_RUN) -w /app -v `pwd`:/app node:wheezy npm install -s
 NPM_INSTALL_BACKEND := $(DOCKER_RUN) -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app node:wheezy npm install -s
 NPM_INSTALL_FRONTEND := $(DOCKER_RUN) -w /app -v `pwd`/$(APP_FRONTEND_FOLDER):/app node:wheezy npm install -s
+NPM_BUILD_FRONTEND := $(DOCKER_RUN) -w /app -v `pwd`:/app node:wheezy npm run pack -s
 
 # Composer commands
 COMPOSER_INSTALL_APP := $(DOCKER_RUN) -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app composer/composer install
@@ -80,14 +81,27 @@ ifeq ($(QUIET),false)
 	printf $(NC)' VALUE
 endif
 
+.PHONY: build clean init-project install npm-install reset run setup start test wipe tt
 
-
-
-.PHONY: init-project install npm-install reset run setup start test wipe tt
+clean:
+	${INFO} "Cleaning environment.."
+	${CMD} rm -rf environment/docker/images/*
+	${CMD} rm -rf mysql_data
+	${CMD} rm -rf node_modules
+	${CMD} rm -rf src/backend/vendor
+	${CMD} rm -rf src/backend/node_modules
+	${CMD} rm -rf src/frontend/node_modules
+	${CMD} rm -rf src/backend/.env
+	${CMD} rm -rf src/backend/public/assets/javascript/*.bundle.js*
+	${CMD} rm -rf src/backend/public/assets/javascript/*chunk.js*
+	${INFO} "Done."
 
 build:
+	# Needs to be executed only after install or npm-install
 	${INFO} "Building development environment.."
-	${CMD} $(DEV_COMPOSE_CMD) build
+	# ${CMD} $(DEV_COMPOSE_CMD) build
+	${INFO} "Building javascript using webpack.."
+	${CMD} $(NPM_BUILD_FRONTEND)
 	${INFO} "Done."
 
 init-project:
@@ -99,8 +113,8 @@ init-project:
 
 install:
 	@make npm-install
-	@make build
 	@make composer-install
+	@make build
 	${INFO} "Changing permissions.."
 	${CMD} $(CHMOD) +x $(BIN_FOLDER)/*
 	${INFO} "Done."
@@ -131,6 +145,7 @@ run:
 	@make reset
 
 reset:
+	@make clean
 	@make wipe
 	@make setup
 	@make install

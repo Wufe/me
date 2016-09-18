@@ -1,5 +1,6 @@
 *.DS_Store
-*.js.map
+*.bundle.js*
+*chunk.js*
 node_modules
 vendor
 mysql_data
