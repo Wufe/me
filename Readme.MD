@@ -38,4 +38,4 @@ The bin folder contains binaries for artisan, composer, npm and node, using dock
 
 ##### Destination
 
-The website will be hosted on [my personal website](https://simone.bembi.me).
+The website will be hosted on [here](https://simone.bembi.me).
