@@ -4,5 +4,3 @@ vendor
 mysql_data
 composer.lock
 npm-debug.log
-src/backend/*
-src/frontend/*
