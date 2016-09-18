@@ -11,13 +11,15 @@ In order to accomplish portability the project will use `docker` and `docker-com
 + `docker-compose 1.8.0+`  
 + `gnu make`  
 
-#### Installation and first start
+#### Installation
 
-+ `make run`
++ `make install`
 
 #### Start  
 
-+ `make start`
++ `make development`  
+
+This will start a development environment
 
 ## Info  
 
