@@ -1,6 +1,9 @@
 # Application name
 APP_NAME ?= app
 
+# Application external port
+PORT ?= 80
+
 # Quiet log
 QUIET ?= false
 
@@ -78,11 +81,11 @@ development:
 	
 development-start:
 	${INFO} "Starting database.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe > /dev/null
 	${INFO} "Starting web server.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate || true
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Development environment ready."
 	@if [ $(WATCH) == true ]; then \
 		make watch; \
@@ -94,7 +97,7 @@ development-stop:
 
 development-kill:
 	${INFO} "Killing containers.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) stop
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) kill
 
 development-remove:
 	${INFO} "Removing containers.."
@@ -119,11 +122,19 @@ deploy:
 	# To be implemented
 
 wipe:
+	@make development-wipe
+	@make wipe-dangling
+	@if [ $(ALL) == true ]; then \
+		make wipe-environment; \
+	fi
+	${SUCCESS} "Done."
+
+wipe-dangling:
 	${INFO} "Wiping docker dangling images and volumes.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) kill
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) rm -f -v
 	@docker images -q -f dangling=true | xargs -I ARGS docker rmi -f ARGS
 	@docker volume ls -q -f dangling=true | xargs -I ARGS docker volume rm ARGS
+
+wipe-environment:
 	${INFO} "Wiping folders and environment.."
 	${CMD} rm -rf environment/docker/images/*
 	${CMD} rm -rf mysql_data
@@ -136,11 +147,13 @@ wipe:
 	${CMD} rm -rf src/backend/resources/assets/javascript/*bundle.js*
 	${CMD} rm -rf src/backend/resources/assets/javascript/*chunk.js*
 	${CMD} rm -rf src/frontend/node_modules
-	${SUCCESS} "Done."
 
 watch:
 	${INFO} "Starting now webpack routine.."
 	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack:watch -s
+
+reset:
+	@make run
 
 run:
 	${INFO} "Running all suite of development commands.."
@@ -179,6 +192,7 @@ ifeq ($(QUIET),false)
 endif
 
 # Command variables
+ALL := false
 STOP := false
 KILL := false
 WIPE := false

@@ -24,9 +24,11 @@ This will start a development environment
 #### `Makefile` commands
 
  + `make run`: install development environment and starts it.
+ + `make reset`: alias for run.
  + `make install`: installs all dependencies and runs post-install scripts.
  + `make test`: starts development environment and runs tests.
- + `make wipe`: deletes dependencies and temporary volumes folders.
+ + `make wipe`: deletes docker containers and dangling items.
+ + `make wipe ALL=true`: like wipe, but including environment and dependency folders.
  + `make development`: start development environment.
  + `make development WATCH=false`: start development environment without webpack build and watch. It is true by default.
  + `make development QUIET=true`: quiet mode.
