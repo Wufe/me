@@ -22,6 +22,7 @@ class Routes{
 	getRoutes(){
 		return (
 			<Route path="/" component={App}>
+				<IndexRoute getComponent={this.loadComponent( "home" )} />
 				<Route path="test" getComponent={this.loadComponent( "test" )}>
 				</Route>
             </Route>

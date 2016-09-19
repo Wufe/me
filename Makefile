@@ -26,7 +26,7 @@ REL_APP_COMPOSE_FILE := environment/docker/compose/release/app.yml
 COMPOSE_DEV_FILES := -f $(DEV_COMMON_COMPOSE_FILE) -f $(DEV_APP_COMPOSE_FILE)
 COMPOSE_REL_FILES := -f $(REL_COMMON_COMPOSE_FILE) -f $(REL_APP_COMPOSE_FILE)
 
-.PHONY: install development test build release deploy wipe run
+.PHONY: install development test build release deploy wipe watch run
 
 install:
 	${INFO} "Downloading docker images.."
@@ -59,9 +59,8 @@ development:
 	${INFO} "Starting web server.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $(APP_NAME)_php_1 php /app/artisan migrate
-	${INFO} "Starting now webpack routine.."
-	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack:watch -s
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate
+	${SUCCESS} "Development environment ready."
 
 test:
 	# Requires development environment up and running
@@ -94,6 +93,10 @@ wipe:
 	${CMD} rm -rf src/backend/public/assets/javascript/*chunk.js*
 	${CMD} rm -rf src/frontend/node_modules
 	${SUCCESS} "Done."
+
+watch:
+	${INFO} "Starting now webpack routine.."
+	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack:watch -s
 
 run:
 	${INFO} "Running all suite of development commands.."

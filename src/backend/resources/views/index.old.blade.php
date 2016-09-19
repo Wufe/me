@@ -5,9 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Me!</title>
+        <title>Laravel</title>
 
-        <!-- Bootstrap -->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 
         <!-- Fonts -->
@@ -15,6 +14,19 @@
 
         <!-- Styles -->
         <style>
+            html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway';
+                font-weight: 100;
+                min-height: 100vh;
+                margin: 0;
+            }
+
+            .almost-full-height{
+                min-height: 80vh;
+            }
+
             .background-image {
                 min-height: 100vh;
                 position: absolute;
@@ -114,8 +126,7 @@
         </style>
     </head>
     <body>
-        <div id="app"></div>
-        <!-- <div class="background-image">
+        <div class="background-image">
             <div class="full-height full-width black-overlay">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -142,10 +153,18 @@
                             <span class="subtitle">{{ $quote }}</span>
                         </div>
                         <div id="app"></div>
+
+                        <!-- <div class="links">
+                            <a href="https://laravel.com/docs">Documentation</a>
+                            <a href="https://laracasts.com">Laracasts</a>
+                            <a href="https://laravel-news.com">News</a>
+                            <a href="https://forge.laravel.com">Forge</a>
+                            <a href="https://github.com/laravel/laravel">GitHub</a>
+                        </div> -->
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <script type="text/javascript" src="assets/javascript/main.bundle.js"></script>
         <script type="text/javascript" src="assets/javascript/vendor.bundle.js"></script>
     </body>
