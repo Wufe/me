@@ -21,6 +21,21 @@ In order to accomplish portability the project will use `docker` and `docker-com
 
 This will start a development environment
 
+#### `Makefile` commands
+
+ + `make run`: install development environment and starts it.
+ + `make install`: installs all dependencies and runs post-install scripts.
+ + `make test`: starts development environment and runs tests.
+ + `make wipe`: deletes dependencies and temporary volumes folders.
+ + `make development`: start development environment.
+ + `make development WATCH=false`: start development environment without webpack build and watch. It is true by default.
+ + `make development QUIET=true`: quiet mode.
+ + `make development STOP=true`: stop containers. It will also remove them by default.
+ + `make development STOP=true REMOVE=false`: stop containers but don't remove them.
+ + `make development KILL=true`: kill containers and remove them by default.
+ + `make development WIPE=true`: kill containers and remove them mandatorily.
+ + `make watch`: uses started development environment to build code with webpack and watch.
+
 ## Info  
 
 This code was based upon  

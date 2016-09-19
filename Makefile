@@ -54,13 +54,39 @@ install:
 	${SUCCESS} "Done."
 
 development:
+	@if [ $(STOP) == false -a $(KILL) == false -a $(WIPE) == false ]; then \
+		make development-start WATCH=$(WATCH); \
+	else \
+		if [ $(WIPE) == true ]; then \
+			make development-wipe; \
+		else \
+			if [ $(KILL) == true ]; then \
+				make development-kill; \
+				if [ $(REMOVE) == true ]; then \
+					make development-remove; \
+				fi \
+			else \
+				if [ $(STOP) == true ]; then \
+					make development-stop; \
+					if [ $(REMOVE) == true ]; then \
+						make development-remove; \
+					fi \
+				fi \
+			fi \
+		fi \
+	fi
+	
+development-start:
 	${INFO} "Starting database.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe
 	${INFO} "Starting web server.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate || true
 	${SUCCESS} "Development environment ready."
+	@if [ $(WATCH) == true ]; then \
+		make watch; \
+	fi
 
 development-stop:
 	${INFO} "Stopping containers.."
@@ -80,7 +106,7 @@ development-wipe:
 
 test:
 	# Requires development environment up and running
-	@make development
+	@make development WATCH=false
 	${INFO} "Testing.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up test
 	${SUCCESS} "Done."
@@ -120,10 +146,8 @@ run:
 	${INFO} "Running all suite of development commands.."
 	@make wipe
 	@make install
-	@make development
+	@make development WATCH=false
 	@make test
-
-
 
 GREEN := "\e[0;32m"
 DARKGREY := "\e[1;30m"
@@ -153,3 +177,10 @@ ifeq ($(QUIET),false)
 	$$*; \
 	printf $(NC)' VALUE
 endif
+
+# Command variables
+STOP := false
+KILL := false
+WIPE := false
+REMOVE := true
+WATCH := true
