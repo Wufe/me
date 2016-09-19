@@ -16,5 +16,3 @@ ReactDOM.render(
 	),
 	document.getElementById( "app" )
 );
-
-console.log( `yo` );

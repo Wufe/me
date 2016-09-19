@@ -62,6 +62,22 @@ development:
 	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate
 	${SUCCESS} "Development environment ready."
 
+development-stop:
+	${INFO} "Stopping containers.."
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) stop
+
+development-kill:
+	${INFO} "Killing containers.."
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) stop
+
+development-remove:
+	${INFO} "Removing containers.."
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) rm -f -v
+
+development-wipe:
+	@make development-kill
+	@make development-remove
+
 test:
 	# Requires development environment up and running
 	@make development
@@ -89,8 +105,10 @@ wipe:
 	${CMD} rm -rf src/backend/.env
 	${CMD} rm -rf src/backend/node_modules
 	${CMD} rm -rf src/backend/vendor
-	${CMD} rm -rf src/backend/public/assets/javascript/*.bundle.js*
+	${CMD} rm -rf src/backend/public/assets/javascript/*bundle.js*
 	${CMD} rm -rf src/backend/public/assets/javascript/*chunk.js*
+	${CMD} rm -rf src/backend/resources/assets/javascript/*bundle.js*
+	${CMD} rm -rf src/backend/resources/assets/javascript/*chunk.js*
 	${CMD} rm -rf src/frontend/node_modules
 	${SUCCESS} "Done."
 

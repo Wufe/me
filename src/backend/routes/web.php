@@ -13,22 +13,28 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-function mainView(){
-	return view('index', [
-    	"quote" => Inspiring::quote(),
-    	"me"	=> [
-    		"name"		=> "Piergiorgio",
-    		"surname"	=> "Rabarbo"
-    	]
-    ]);
-}
+$data = json_encode([
+	"quote" => Inspiring::quote(),
+	"me"	=> [
+		"name"		=> "Piergiorgio",
+		"surname"	=> "Rabarbo"
+	]
+]);
 
-Route::get('/', function () {
-    return mainView();
+$mainView = function() use ( $data ){
+	return view('index', compact( "data" ));
+};
+
+Route::get('/', function () use ( $mainView ) {
+    return $mainView();
 });
-Route::get('/test', function () {
-    return mainView();
+Route::get('/test', function () use ( $mainView ) {
+    return $mainView();
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');

@@ -5,8 +5,6 @@ class App extends React.Component{
 	render(){
 		return (
 			<div class="mainApp">
-				yo! I'm in the main app class.
-				<br />
 				{ this.props.children || "Main Route" }
 			</div>
 		);

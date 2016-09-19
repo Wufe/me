@@ -10,10 +10,10 @@ module.exports = {
         vendor: [ 'react', 'react-dom', 'react-router', 'moment', 'jquery' ]
     },
     output: {
-        publicPath: "/assets/javascript/",
-        path: path.join( 'src', 'backend', 'public', 'assets', 'javascript' ),
-        filename: "[name].bundle.js",
-        chunkFilename: '[name]-chunk.js'
+        publicPath: "/",
+        path: path.join( 'src', 'backend', 'resources', 'assets' ),
+        filename: "javascript/[name].bundle.js",
+        chunkFilename: 'javascript/[name].chunk.js'
     },
     target: 'web',
     module: {
@@ -34,6 +34,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: 'style!css!sass!'
+            },
+            {
+                test: /\.jpg$/,
+                loader: 'url-loader?mimetype=image/jpeg&limit=100000&name=images/img-[name].[ext]' //use img-[hash].[ext] in production after a clean
             }
         ]
     },
