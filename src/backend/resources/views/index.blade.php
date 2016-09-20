@@ -13,16 +13,14 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
+        <script src="{{ asset('vendor/jquery/jquery.slim.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+
         <script>
             if( !window.blade )
                 window.blade = {};
             window.blade.data = {!! $data !!};
-            window.blade.data.links =
-                    @if (Route::has('login'))
-                        [ [ "Login", "{{ url('/login') }}" ], [ "Register", "{{ url('/register') }}" ] ];
-                    @else
-                        [];
-                    @endif
+            window.blade.data.links = [];
         </script>
     </head>
     <body>

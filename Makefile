@@ -4,7 +4,7 @@ APP_NAME ?= app
 DEFAULT_ENVIRONMENT ?= development
 
 # Application external port
-PORT ?= 80
+PORT ?= NA
 
 # Quiet log
 QUIET ?= false
@@ -16,9 +16,9 @@ APP_FRONTEND_FOLDER ?= $(APP_FOLDER)/frontend
 BIN_FOLDER := bin
 
 # Git repositories
-ANSIBLE_IMAGE_PATH := environment/docker/images/ansible
+ANSIBLE_IMAGE_PATH := environment/docker/images/common/ansible
 ANSIBLE_IMAGE_REPO := https://github.com/Wufe/docker-ansible
-PHP_IMAGE_PATH := environment/docker/images/php70
+PHP_IMAGE_PATH := environment/docker/images/common/php70
 PHP_IMAGE_REPO := https://github.com/Wufe/docker-php70
 
 # Docker compose files
@@ -34,29 +34,75 @@ COMPOSE_REL_FILES := -f $(REL_COMMON_COMPOSE_FILE) -f $(REL_APP_COMPOSE_FILE)
 .PHONY: install development start test build release deploy wipe watch run
 
 install:
+	@make install-images
+	@make install-dependencies
+	@make install-post
+	@make build-frontend
+	@make build-images DEVELOPMENT=true
+	${SUCCESS} "Done."
+
+# It's like an install, but for RELEASE environment
+build:
+	@if [ $(PORT) == NA ]; then \
+		echo "PORT environment variable not set."; \
+		exit 2; \
+	fi
+	@make wipe ALL=true
+	@make install-images
+	@make install-dependencies
+	@make install-post
+	@make build-frontend
+	@make build-images RELEASE=true
+
+
+build-images:
+	@if [ $(DEVELOPMENT) == NA -a $(RELEASE) == NA ]; then \
+		make build-images-development; \
+	else \
+		if [ $(DEVELOPMENT) == true ]; then \
+			make build-images-development; \
+		else \
+			if [ $(RELEASE) == true ]; then \
+				make build-images-release; \
+			fi \
+		fi \
+	fi
+
+build-frontend:
+	${INFO} "Building frontend using webpack.."
+	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack -s
+
+build-images-development:
+	${INFO} "Building development docker images.."
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) build
+
+build-images-release:
+	${INFO} "Building release docker images.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) build --pull
+
+install-images:
 	${INFO} "Downloading docker images.."
 	@if ! [ -d "$(ANSIBLE_IMAGE_PATH)" ]; then \
-		git clone $(ANSIBLE_IMAGE_REPO) $(ANSIBLE_IMAGE_PATH); \
+		git clone $(ANSIBLE_IMAGE_REPO) $(ANSIBLE_IMAGE_PATH) >/dev/null; \
 	fi
 	@if ! [ -d "$(PHP_IMAGE_PATH)" ]; then \
-		git clone $(PHP_IMAGE_REPO) $(PHP_IMAGE_PATH); \
+		git clone $(PHP_IMAGE_REPO) $(PHP_IMAGE_PATH) >/dev/null; \
 	fi
+
+install-dependencies:
 	${INFO} "Downloading NPM dependencies.."
 	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm install -s
 	${CMD} docker run -it --rm -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app node:wheezy npm install -s
 	${CMD} docker run -it --rm -w /app -v `pwd`/$(APP_FRONTEND_FOLDER):/app node:wheezy npm install -s
 	${INFO} "Downloading composer dependencies.."
 	${CMD} docker run -it --rm -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app composer/composer install
+
+install-post:
 	${INFO} "Executing post-install scripts.."
 	${CMD} docker run -it --rm -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app composer/composer run-script post-root-package-install
 	${CMD} docker run -it --rm -w /app -v `pwd`/$(APP_BACKEND_FOLDER):/app composer/composer run-script post-create-project-cmd
 	${INFO} "Changing permissions.."
 	${CMD} chmod +x $(BIN_FOLDER)/*
-	${INFO} "Building docker images from compose.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) build
-	${INFO} "Building javascript using webpack.."
-	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack -s
-	${SUCCESS} "Done."
 
 development:
 	@if [ $(STOP) == false -a $(KILL) == false -a $(WIPE) == false ]; then \
@@ -121,15 +167,41 @@ test:
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up test
 	${SUCCESS} "Done."
 
-build:
-	# To be implemented
+# TODO: Check if BUILD=true ( true by default ). It it is true, then build.
 release:
-	# To be implemented
+	@if [ $(BUILD) == true -o $(BUILD) == NA ]; then \
+		make build; \
+	fi
+	${INFO} "Starting database.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) up probe > /dev/null
+	${INFO} "Starting web server.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) up -d nginx
+	${INFO} "Migrating database.."
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
+	${SUCCESS} "Release environment ready."
+
+release-stop:
+	${INFO} "Stopping containers.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) stop
+
+release-kill:
+	${INFO} "Killing containers.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) kill
+
+release-remove:
+	${INFO} "Removing containers.."
+	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) rm -f -v
+
+release-wipe:
+	@make release-kill
+	@make release-remove
+
 deploy:
 	# To be implemented
 
 wipe:
 	@make development-wipe
+	@make release-wipe
 	@make wipe-dangling
 	@if [ $(ALL) == true ]; then \
 		make wipe-environment; \
@@ -143,7 +215,8 @@ wipe-dangling:
 
 wipe-environment:
 	${INFO} "Wiping folders and environment.."
-	${CMD} rm -rf environment/docker/images/*
+	${CMD} rm -rf $(ANSIBLE_IMAGE_PATH)
+	${CMD} rm -rf $(PHP_IMAGE_PATH)
 	${CMD} rm -rf mysql_data
 	${CMD} rm -rf node_modules
 	${CMD} rm -rf src/backend/.env
@@ -199,6 +272,9 @@ ifeq ($(QUIET),false)
 endif
 
 # Command variables
+BUILD := NA
+RELEASE := NA
+DEVELOPMENT := NA
 ALL := false
 STOP := false
 KILL := false

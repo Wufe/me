@@ -5,7 +5,7 @@ services:
   probe:
     build:
       context: ../../../../
-      dockerfile: environment/docker/images/ansible/Dockerfile
+      dockerfile: environment/docker/images/common/ansible/Dockerfile
     links:
       - db:db
     tty: true
@@ -23,19 +23,4 @@ services:
     links:
       - php:php
     ports:
-      - 80:80
-  composer:
-    image: composer/composer
-    volumes_from:
-      - app-rel
-    tty: true
-    entrypoint: composer install
-  test:
-    build:
-      context: ../../../../
-      dockerfile: environment/docker/images/php70/xdebug/Dockerfile
-    volumes_from:
-      - app-rel
-    tty: true
-    working_dir: /app
-    command: /app/vendor/bin/phpunit tests
+      - ${PORT}:80

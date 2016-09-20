@@ -22,26 +22,40 @@ const Home = ({children}) => {
 				<nav className="navbar navbar-default">
 					<div className="container-fluid">
 						<div className="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+						    </button>
 							<a href="/" className="navbar-brand">{window.blade.data.me.name || data.me.name} {window.blade.data.me.surname || data.me.surname}</a>
-							<div className="top-right links">
-								<a href="/">Skills</a>
-								<a href="/">Experiences</a>
-								<a href="/">Works</a>
-								<a href="/">Contacts</a>
-								{links.map(url => <a key={url[0]} href={url[1]}>{url[0]}</a>)}
-							</div>
+						</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul className="nav navbar-nav navbar-right">
+								<li><a href="/">Skills</a></li>
+								<li><a href="/">Experiences</a></li>
+								<li><a href="/">Works</a></li>
+								<li><a href="/">Contacts</a></li>
+							</ul>
 						</div>
 					</div>
 				</nav>
 				<div className="centered-content">
+					
 					<div className="centered-container">
-						<div className="centered-title">
-							{window.blade.data.me.name} {window.blade.data.me.surname}
+						<div className="darker-content">
+							<div className="centered-title">
+								{window.blade.data.me.name} {window.blade.data.me.surname}
+							</div>
+							<div className="centered-subtitle">
+								{window.blade.data.quote}
+							</div>
 						</div>
-						<div className="centered-subtitle">
-							{window.blade.data.quote}
-						</div>
+						<div className="centered-info">Site under construction</div>
 					</div>
+					
+					
+					
 				</div>
 			</div>
 		</div>

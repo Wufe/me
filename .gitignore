@@ -6,5 +6,6 @@ vendor
 mysql_data
 composer.lock
 npm-debug.log
-environment/docker/images/ansible
-environment/docker/images/php70
+environment/docker/images/common/ansible
+environment/docker/images/common/php70
+*rel.env
