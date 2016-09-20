@@ -37,6 +37,7 @@ This will start a development environment
  + `make development KILL=true`: kill containers and remove them by default.
  + `make development WIPE=true`: kill containers and remove them mandatorily.
  + `make watch`: uses started development environment to build code with webpack and watch.
+ + `make start`: runs `make development` if default environment is development.
 
 ## Info  
 

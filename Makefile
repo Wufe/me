@@ -1,6 +1,8 @@
 # Application name
 APP_NAME ?= app
 
+DEFAULT_ENVIRONMENT ?= development
+
 # Application external port
 PORT ?= 80
 
@@ -29,7 +31,7 @@ REL_APP_COMPOSE_FILE := environment/docker/compose/release/app.yml
 COMPOSE_DEV_FILES := -f $(DEV_COMMON_COMPOSE_FILE) -f $(DEV_APP_COMPOSE_FILE)
 COMPOSE_REL_FILES := -f $(REL_COMMON_COMPOSE_FILE) -f $(REL_APP_COMPOSE_FILE)
 
-.PHONY: install development test build release deploy wipe watch run
+.PHONY: install development start test build release deploy wipe watch run
 
 install:
 	${INFO} "Downloading docker images.."
@@ -106,6 +108,11 @@ development-remove:
 development-wipe:
 	@make development-kill
 	@make development-remove
+
+start:
+	@if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
+		make development; \
+	fi
 
 test:
 	# Requires development environment up and running
