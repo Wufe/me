@@ -16,8 +16,8 @@ use Illuminate\Foundation\Inspiring;
 $data = json_encode([
 	"quote" => Inspiring::quote(),
 	"me"	=> [
-		"name"		=> "Piergiorgio",
-		"surname"	=> "Rabarbo"
+		"name"		=> "Simone",
+		"surname"	=> "Bembi"
 	]
 ]);
 

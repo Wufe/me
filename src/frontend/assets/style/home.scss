@@ -17,7 +17,7 @@
 	position: absolute;
 	width: 100vw;
 	z-index: 1;
-	background: rgba(0,0,0,0.6);
+	background: rgba(0,0,0,0.3);
 	overflow: hidden;
 }
 
@@ -73,9 +73,14 @@
 
     		color: white;
     		text-align: center;
+    		padding: 20px;
+	    	background-color: rgba(0,0,0,0.7);
+	    	border: 1px solid #121212;
+	    	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.4);
+	    	border-radius: 3px;
 
 			.centered-title{
-				font-size: 84px;
+				font-size: 70px;
 				margin-bottom: 20px;
 				cursor: default;
 				@include noselect();
