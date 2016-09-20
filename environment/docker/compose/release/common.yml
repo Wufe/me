@@ -14,13 +14,3 @@ services:
       PROBE_PORT: "3306"
     volumes:
       - ../../configuration/ansible/probe.yml:/ansible/site.yml
-  nginx:
-    image: nginx
-    volumes_from:
-      - app-rel
-    volumes:
-      - ../../configuration/nginx/conf.d:/etc/nginx/conf.d
-    links:
-      - php:php
-    ports:
-      - ${PORT}:80

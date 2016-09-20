@@ -15,3 +15,11 @@ services:
       - ../../../rel.env
     volumes:
       - /var/lib/mysql
+  nginx:
+    build:
+      context: ../../../../
+      dockerfile: environment/docker/images/release/nginx/Dockerfile
+    links:
+      - php:php
+    ports:
+      - ${PORT}:80

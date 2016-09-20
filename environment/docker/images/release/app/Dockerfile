@@ -3,4 +3,6 @@ MAINTAINER Simone Bembi <simone.bembi@gmail.com>
 
 COPY . /app
 
+EXPOSE 9000
+
 ENTRYPOINT php-fpm
