@@ -25,6 +25,14 @@ wipe-development:
 	@make remove-development
 
 wipe-production:
+	@if [ $(PORT) == NA ]; then \
+		bash -c '\
+			printf $(RED); \
+			echo "==> PORT environment variable not set."; \
+			printf $(NC); \
+		'; \
+		exit 2; \
+	fi
 	@make kill-production
 	@make remove-production
 

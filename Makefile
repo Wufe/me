@@ -1,7 +1,4 @@
-include environment/make/Variables.mk
-include environment/make/Wipe.mk
-include environment/make/Kill.mk
-include environment/make/Remove.mk
+include environment/make/*
 
 # Application name
 APP_NAME ?= me
@@ -131,22 +128,6 @@ development-start:
 		make watch; \
 	fi
 
-development-stop:
-	${INFO} "Stopping containers.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) stop
-
-development-kill:
-	${INFO} "Killing containers.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) kill
-
-development-remove:
-	${INFO} "Removing containers.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) rm -f -v
-
-development-wipe:
-	@make development-kill
-	@make development-remove
-
 start:
 	@if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
 		make development; \
@@ -171,30 +152,6 @@ release:
 	${INFO} "Migrating database.."
 	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Release environment ready."
-
-release-stop:
-	${INFO} "Stopping containers.."
-	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) stop
-
-release-kill:
-	${INFO} "Killing containers.."
-	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) kill
-
-release-remove:
-	${INFO} "Removing containers.."
-	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) rm -f -v
-
-release-wipe:
-	@if [ $(PORT) == NA ]; then \
-		bash -c '\
-			printf $(RED); \
-			echo "==> PORT environment variable not set."; \
-			printf $(NC); \
-		'; \
-		exit 2; \
-	fi
-	@make release-kill
-	@make release-remove
 
 deploy:
 	# To be implemented
