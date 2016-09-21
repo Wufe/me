@@ -1,5 +1,5 @@
 # Application name
-APP_NAME ?= app
+APP_NAME ?= me
 
 DEFAULT_ENVIRONMENT ?= development
 
@@ -41,17 +41,20 @@ install:
 	@make build-images DEVELOPMENT=true
 	${SUCCESS} "Done."
 
-# It's like an install, but for RELEASE environment
+# build stage will create a "dist" folder, ignored from git repo
+# will copy all the things from the source code ( after dependencies installed )
+# will bundle the frontend with production environment
+# will create environment file for laravel
 build:
 	@if [ $(PORT) == NA ]; then \
 		echo "PORT environment variable not set."; \
 		exit 2; \
 	fi
-	@make wipe ALL=true
-	@make install-images
-	@make install-dependencies
-	@make install-post
-	@make build-frontend
+	# @make wipe ALL=true
+	# @make install-images
+	# @make install-dependencies
+	# @make install-post
+	# @make build-frontend
 	@make build-images RELEASE=true
 
 
@@ -71,6 +74,12 @@ build-images:
 build-frontend:
 	${INFO} "Building frontend using webpack.."
 	${CMD} docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm run pack -s
+
+build-frontend-development: # or bundle-frontend-development
+
+build-frontend-production:  # or bundle-frontend-production
+
+
 
 build-images-development:
 	${INFO} "Building development docker images.."

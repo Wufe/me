@@ -21,5 +21,7 @@ services:
       dockerfile: environment/docker/images/release/nginx/Dockerfile
     links:
       - php:php
+    volumes:
+      - ../../configuration/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - ${PORT}:80
