@@ -25,17 +25,17 @@ QUIET ?= false
 # will copy all the things from the source code ( after dependencies installed )
 # will bundle the frontend with production environment
 # will create environment file for laravel
-build:
-	@if [ $(PORT) == NA ]; then \
-		echo "PORT environment variable not set."; \
-		exit 2; \
-	fi
-	# @make wipe ALL=true
-	# @make install-images
-	# @make install-dependencies
-	# @make install-post
-	# @make build-frontend
-	@make build-images RELEASE=true
+# build:
+# 	@if [ $(PORT) == NA ]; then \
+# 		echo "PORT environment variable not set."; \
+# 		exit 2; \
+# 	fi
+# 	# @make wipe ALL=true
+# 	# @make install-images
+# 	# @make install-dependencies
+# 	# @make install-post
+# 	# @make build-frontend
+# 	@make build-images RELEASE=true
 
 
 build-images:

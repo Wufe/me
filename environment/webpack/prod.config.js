@@ -43,6 +43,6 @@ module.exports = {
     plugins: [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true })
+        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false })
     ]
 }

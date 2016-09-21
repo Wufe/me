@@ -20,7 +20,7 @@ build-development:
 
 build-production:
 	@make build-dist
-	@make bundle DEVELOPMENT=true
+	@make bundle PRODUCTION=true
 	@make build-docker-images-production
 	
 
@@ -41,10 +41,15 @@ build-docker-images-production:
 	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) build --pull
 
 build-dist:
+	${INFO} "Building dist folder.."
 	@if [ -d "$(DIST_FOLDER)" ]; then \
 		rm -rf $(DIST_FOLDER); \
 	fi
 	${CMD} cp -R $(APP_BACKEND_FOLDER) $(DIST_FOLDER)
+	${INFO} "Cleaning dist folder.."
+	${CMD} rm -rf $(DIST_FOLDER)/resources/assets/images/*
+	${CMD} rm -rf $(DIST_FOLDER)/resources/assets/javascript/*
+	${INFO} "Checking production environment file.."
 	@if ! [ -d "$(PRODUCTION_ENVIRONMENT_FILE)" ]; then \
 		cp $(DEVELOPMENT_ENVIRONMENT_FILE) $(PRODUCTION_ENVIRONMENT_FILE); \
 	fi
