@@ -3,6 +3,10 @@ APP_BACKEND_FOLDER ?= $(APP_FOLDER)/backend
 APP_FRONTEND_FOLDER ?= $(APP_FOLDER)/frontend
 
 BIN_FOLDER := bin
+DIST_FOLDER := dist
+
+DEVELOPMENT_ENVIRONMENT_FILE := environment/dev.env
+PRODUCTION_ENVIRONMENT_FILE := environment/prod.env
 
 # Git repositories
 ANSIBLE_IMAGE_PATH := environment/docker/images/common/ansible

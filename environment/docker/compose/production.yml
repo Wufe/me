@@ -3,14 +3,14 @@ services:
   php:
     build:
       context: ../../../
-      dockerfile: environment/docker/images/release/app/Dockerfile
+      dockerfile: environment/docker/images/production/app/Dockerfile
     links:
       - db:db
       - redis:redis
   db:
     build:
       context: ../../../
-      dockerfile: environment/docker/images/release/db/Dockerfile
+      dockerfile: environment/docker/images/production/db/Dockerfile
     env_file:
       - ../../prod.env
     volumes:
@@ -18,7 +18,7 @@ services:
   nginx:
     build:
       context: ../../../
-      dockerfile: environment/docker/images/release/nginx/Dockerfile
+      dockerfile: environment/docker/images/production/nginx/Dockerfile
     links:
       - php:php
     volumes:

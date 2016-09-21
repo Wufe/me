@@ -1,7 +1,7 @@
 FROM kesshin/php70:latest
 MAINTAINER Simone Bembi <simone.bembi@gmail.com>
 
-COPY ./src/backend /app
+COPY dist /app
 
 EXPOSE 9000
 

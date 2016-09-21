@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "esw -c environment/.eslintrc src/frontend",
     "lint:watch": "npm run lint -- --watch --quiet",
-    "pack": "webpack -d --progress --color --config environment/webpack/dev.config.js",
+    "pack": "npm run -s pack:development",
+    "pack:development": "webpack -d --progress --color --config environment/webpack/dev.config.js",
+    "pack:production": "webpack -d --progress --color --config environment/webpack/prod.config.js",
     "pack:watch": "npm run pack -- --watch"
   },
   "repository": {
