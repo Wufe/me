@@ -24,10 +24,10 @@ start-development:
 	${SUCCESS} "Development environment ready."
 
 start-production:
-	@if [ $(PORT) == NA ]; then \
+	@if [ $(PORT) == NA ] || [ $(MYSQL_ROOT_PASSWORD) == NA ] || [ $(MYSQL_USER) == NA ] || [ $(MYSQL_PASSWORD) == NA ] || [ $(MYSQL_DATABASE) == NA ]; then \
 		bash -c '\
 			printf $(RED); \
-			echo "==> PORT environment variable not set."; \
+			echo "==> PORT, MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER or MYSQL_PASSWORD environment variable not set."; \
 			printf $(NC); \
 		'; \
 		exit 2; \

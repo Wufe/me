@@ -11,8 +11,11 @@ services:
     build:
       context: ../../../
       dockerfile: environment/docker/images/production/db/Dockerfile
-    env_file:
-      - ../../prod.env
+    environment:
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_USER
+      - MYSQL_PASSWORD
     volumes:
       - /var/lib/mysql
   nginx:

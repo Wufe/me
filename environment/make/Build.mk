@@ -50,6 +50,10 @@ build-dist:
 	${CMD} rm -rf $(DIST_FOLDER)/resources/assets/images/*
 	${CMD} rm -rf $(DIST_FOLDER)/resources/assets/javascript/*
 	${INFO} "Checking production environment file.."
-	@if ! [ -d "$(PRODUCTION_ENVIRONMENT_FILE)" ]; then \
-		cp $(DEVELOPMENT_ENVIRONMENT_FILE) $(PRODUCTION_ENVIRONMENT_FILE); \
+	@if ! [ -f "$(PRODUCTION_ENVIRONMENT_FILE)" ]; then \
+		cp src/backend/.env.example $(PRODUCTION_ENVIRONMENT_FILE); \
 	fi
+	${INFO} "Applying production environment.."
+	${CMD} cp $(PRODUCTION_ENVIRONMENT_FILE) $(DIST_FOLDER)/.env
+	${INFO} "Creating new application key.."
+	${CMD} docker run -it --rm -w /app -v `pwd`/$(DIST_FOLDER):/app composer/composer run-script post-create-project-cmd

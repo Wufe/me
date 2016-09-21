@@ -51,7 +51,7 @@ environment/docker/images/common/ansible
 environment/docker/images/common/php70
 
 ### Environment files
-*prod.env
+*prod.env*
 
 ### Dist folder for production
 dist
