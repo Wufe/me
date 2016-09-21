@@ -1,5 +1,7 @@
 include environment/make/Variables.mk
 include environment/make/Wipe.mk
+include environment/make/Kill.mk
+include environment/make/Remove.mk
 
 # Application name
 APP_NAME ?= me

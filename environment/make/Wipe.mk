@@ -1,7 +1,7 @@
 .PHONY: wipe
 
 wipe:
-	if [ $(DEVELOPMENT) == NA -a $(PRODUCTION) == NA ]; then \
+	@if [ $(DEVELOPMENT) == NA -a $(PRODUCTION) == NA ]; then \
 		if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
 			make wipe-development; \
 		else \
@@ -10,7 +10,7 @@ wipe:
 	else \
 		if [ $(DEVELOPMENT) == true ]; then \
 			make wipe-development; \
-		fi \
+		fi; \
 		if [ $(PRODUCTION) == true ]; then \
 			make wipe-production; \
 		fi \
