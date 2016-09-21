@@ -36,8 +36,8 @@ Temporary Items
 *chunk.js*
 
 ### Dependencies
-node_modules
-vendor
+/node_modules
+/vendor
 
 ### Temporary volume folder
 mysql_data

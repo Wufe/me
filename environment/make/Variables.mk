@@ -64,4 +64,4 @@ STOP := false
 KILL := false
 WIPE := false
 REMOVE := true
-WATCH := true
+WATCH := NA

@@ -37,59 +37,45 @@ QUIET ?= false
 # 	# @make build-frontend
 # 	@make build-images RELEASE=true
 
-
-build-images:
-	@if [ $(DEVELOPMENT) == NA -a $(RELEASE) == NA ]; then \
-		make build-images-development; \
-	else \
-		if [ $(DEVELOPMENT) == true ]; then \
-			make build-images-development; \
-		else \
-			if [ $(RELEASE) == true ]; then \
-				make build-images-release; \
-			fi \
-		fi \
-	fi
-
-development:
-	@if [ $(STOP) == false -a $(KILL) == false -a $(WIPE) == false ]; then \
-		make development-start WATCH=$(WATCH); \
-	else \
-		if [ $(WIPE) == true ]; then \
-			make development-wipe; \
-		else \
-			if [ $(KILL) == true ]; then \
-				make development-kill; \
-				if [ $(REMOVE) == true ]; then \
-					make development-remove; \
-				fi \
-			else \
-				if [ $(STOP) == true ]; then \
-					make development-stop; \
-					if [ $(REMOVE) == true ]; then \
-						make development-remove; \
-					fi \
-				fi \
-			fi \
-		fi \
-	fi
+# development:
+# 	@if [ $(STOP) == false -a $(KILL) == false -a $(WIPE) == false ]; then \
+# 		make development-start WATCH=$(WATCH); \
+# 	else \
+# 		if [ $(WIPE) == true ]; then \
+# 			make development-wipe; \
+# 		else \
+# 			if [ $(KILL) == true ]; then \
+# 				make development-kill; \
+# 				if [ $(REMOVE) == true ]; then \
+# 					make development-remove; \
+# 				fi \
+# 			else \
+# 				if [ $(STOP) == true ]; then \
+# 					make development-stop; \
+# 					if [ $(REMOVE) == true ]; then \
+# 						make development-remove; \
+# 					fi \
+# 				fi \
+# 			fi \
+# 		fi \
+# 	fi
 	
-development-start:
-	${INFO} "Starting database.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe > /dev/null
-	${INFO} "Starting web server.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
-	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
-	${SUCCESS} "Development environment ready."
-	@if [ $(WATCH) == true ]; then \
-		make watch; \
-	fi
+# development-start:
+# 	${INFO} "Starting database.."
+# 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe > /dev/null
+# 	${INFO} "Starting web server.."
+# 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
+# 	${INFO} "Migrating database.."
+# 	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
+# 	${SUCCESS} "Development environment ready."
+# 	@if [ $(WATCH) == true ]; then \
+# 		make watch; \
+# 	fi
 
-start:
-	@if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
-		make development; \
-	fi
+# start:
+# 	@if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
+# 		make development; \
+# 	fi
 
 test:
 	# Requires development environment up and running
