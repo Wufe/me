@@ -1,4 +1,5 @@
 include environment/make/Variables.mk
+include environment/make/Wipe.mk
 
 # Application name
 APP_NAME ?= me
@@ -195,35 +196,6 @@ release-wipe:
 
 deploy:
 	# To be implemented
-
-wipe:
-	@make development-wipe
-	@make release-wipe
-	@make wipe-dangling
-	@if [ $(ALL) == true ]; then \
-		make wipe-environment; \
-	fi
-	${SUCCESS} "Done."
-
-wipe-dangling:
-	${INFO} "Wiping docker dangling images and volumes.."
-	@docker images -q -f dangling=true | xargs -I ARGS docker rmi -f ARGS
-	@docker volume ls -q -f dangling=true | xargs -I ARGS docker volume rm ARGS
-
-wipe-environment:
-	${INFO} "Wiping folders and environment.."
-	${CMD} rm -rf $(ANSIBLE_IMAGE_PATH)
-	${CMD} rm -rf $(PHP_IMAGE_PATH)
-	${CMD} rm -rf mysql_data
-	${CMD} rm -rf node_modules
-	${CMD} rm -rf src/backend/.env
-	${CMD} rm -rf src/backend/node_modules
-	${CMD} rm -rf src/backend/vendor
-	${CMD} rm -rf src/backend/public/assets/javascript/*bundle.js*
-	${CMD} rm -rf src/backend/public/assets/javascript/*chunk.js*
-	${CMD} rm -rf src/backend/resources/assets/javascript/*bundle.js*
-	${CMD} rm -rf src/backend/resources/assets/javascript/*chunk.js*
-	${CMD} rm -rf src/frontend/node_modules
 
 watch:
 	${INFO} "Starting now webpack routine.."
