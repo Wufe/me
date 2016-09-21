@@ -3,7 +3,7 @@ var path = require( 'path' );
 
 module.exports = {
     context: path.join( __dirname, '..', '..' ),
-    devtool: "inline-sourcemap", // null if not in debug
+    devtool: "null",
     entry: {
         main: "./src/frontend/index.js",
         vendor: [ 'react', 'react-dom', 'react-router', 'moment', 'jquery' ]
@@ -36,13 +36,13 @@ module.exports = {
             },
             {
                 test: /\.jpg$/,
-                loader: 'url-loader?mimetype=image/jpeg&limit=100000&name=images/img-[name].[ext]' //use img-[hash].[ext] in production after a clean
+                loader: 'url-loader?mimetype=image/jpeg&limit=100000&name=images/img-[hash].[ext]'
             }
         ]
     },
     plugins: [
-        // new webpack.optimize.DedupePlugin(),
-        // new webpack.optimize.OccurenceOrderPlugin(),
-        // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true })
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true })
     ]
 }

@@ -1,3 +1,5 @@
+include environment/make/Variables.mk
+
 # Application name
 APP_NAME ?= me
 
@@ -8,28 +10,6 @@ PORT ?= NA
 
 # Quiet log
 QUIET ?= false
-
-APP_FOLDER := src
-APP_BACKEND_FOLDER ?= $(APP_FOLDER)/backend
-APP_FRONTEND_FOLDER ?= $(APP_FOLDER)/frontend
-
-BIN_FOLDER := bin
-
-# Git repositories
-ANSIBLE_IMAGE_PATH := environment/docker/images/common/ansible
-ANSIBLE_IMAGE_REPO := https://github.com/Wufe/docker-ansible
-PHP_IMAGE_PATH := environment/docker/images/common/php70
-PHP_IMAGE_REPO := https://github.com/Wufe/docker-php70
-
-# Docker compose files
-DEV_COMMON_COMPOSE_FILE := environment/docker/compose/development/common.yml
-DEV_APP_COMPOSE_FILE := environment/docker/compose/development/app.yml
-
-REL_COMMON_COMPOSE_FILE := environment/docker/compose/release/common.yml
-REL_APP_COMPOSE_FILE := environment/docker/compose/release/app.yml
-
-COMPOSE_DEV_FILES := -f $(DEV_COMMON_COMPOSE_FILE) -f $(DEV_APP_COMPOSE_FILE)
-COMPOSE_REL_FILES := -f $(REL_COMMON_COMPOSE_FILE) -f $(REL_APP_COMPOSE_FILE)
 
 .PHONY: install development start test build release deploy wipe watch run
 
@@ -87,7 +67,7 @@ build-images-development:
 
 build-images-release:
 	${INFO} "Building release docker images.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) build --pull
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) build --pull
 
 install-images:
 	${INFO} "Downloading docker images.."
@@ -182,26 +162,34 @@ release:
 		make build; \
 	fi
 	${INFO} "Starting database.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) up probe > /dev/null
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up probe > /dev/null
 	${INFO} "Starting web server.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) up -d nginx
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up -d nginx
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Release environment ready."
 
 release-stop:
 	${INFO} "Stopping containers.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) stop
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) stop
 
 release-kill:
 	${INFO} "Killing containers.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) kill
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) kill
 
 release-remove:
 	${INFO} "Removing containers.."
-	${CMD} docker-compose $(COMPOSE_REL_FILES) -p $(APP_NAME) rm -f -v
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) rm -f -v
 
 release-wipe:
+	@if [ $(PORT) == NA ]; then \
+		bash -c '\
+			printf $(RED); \
+			echo "==> PORT environment variable not set."; \
+			printf $(NC); \
+		'; \
+		exit 2; \
+	fi
 	@make release-kill
 	@make release-remove
 
@@ -251,42 +239,3 @@ run:
 	@make development WATCH=false
 	@make test
 
-GREEN := "\e[0;32m"
-DARKGREY := "\e[1;30m"
-YELLOW := "\e[1;33m"
-NC := "\e[0m"
-
-INFO := @bash -c '\
-	printf $(YELLOW); \
-	echo "=> $$1"; \
-	printf $(NC)' VALUE
-
-SUCCESS := @bash -c '\
-	printf $(GREEN); \
-	echo "=> $$1"; \
-	printf $(NC)' VALUE
-
-ifeq ($(QUIET),true)
-	CMD := @bash -c '\
-	$$* >/dev/null; \
-	' VALUE
-endif
-
-ifeq ($(QUIET),false)
-	CMD := @bash -c '\
-	printf $(DARKGREY); \
-	echo "=> $$*"; \
-	$$*; \
-	printf $(NC)' VALUE
-endif
-
-# Command variables
-BUILD := NA
-RELEASE := NA
-DEVELOPMENT := NA
-ALL := false
-STOP := false
-KILL := false
-WIPE := false
-REMOVE := true
-WATCH := true

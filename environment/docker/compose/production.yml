@@ -2,26 +2,26 @@ version: '2'
 services:
   php:
     build:
-      context: ../../../../
+      context: ../../../
       dockerfile: environment/docker/images/release/app/Dockerfile
     links:
       - db:db
       - redis:redis
   db:
     build:
-      context: ../../../../
+      context: ../../../
       dockerfile: environment/docker/images/release/db/Dockerfile
     env_file:
-      - ../../../rel.env
+      - ../../prod.env
     volumes:
       - /var/lib/mysql
   nginx:
     build:
-      context: ../../../../
+      context: ../../../
       dockerfile: environment/docker/images/release/nginx/Dockerfile
     links:
       - php:php
     volumes:
-      - ../../configuration/nginx/conf.d:/etc/nginx/conf.d
+      - ../configuration/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - ${PORT}:80
