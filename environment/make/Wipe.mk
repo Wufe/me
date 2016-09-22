@@ -36,8 +36,8 @@ wipe-production:
 
 wipe-dangling:
 	${INFO} "Wiping docker dangling images and volumes.."
-	@docker images -q -f dangling=true | xargs -I ARGS docker rmi -f ARGS
-	@docker volume ls -q -f dangling=true | xargs -I ARGS docker volume rm ARGS
+	@docker images -q -f dangling=true | xargs -I ARGS docker rmi -f ARGS || true
+	@docker volume ls -q -f dangling=true | xargs -I ARGS docker volume rm ARGS || true
 
 wipe-environment:
 	${INFO} "Wiping folders and environment.."
