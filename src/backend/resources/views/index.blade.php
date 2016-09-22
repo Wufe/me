@@ -8,13 +8,13 @@
         <title>Me!</title>
 
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-        <script src="{{ asset('vendor/jquery/jquery.slim.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="vendor/jquery/jquery.slim.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
         <script>
             if( !window.blade )
@@ -25,7 +25,7 @@
     </head>
     <body>
         <div id="app"></div>
-        <script type="text/javascript" src="{{ asset('javascript/main.bundle.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('javascript/vendor.bundle.js') }}"></script>
+        <script type="text/javascript" src="javascript/main.bundle.js"></script>
+        <script type="text/javascript" src="javascript/vendor.bundle.js"></script>
     </body>
 </html>
