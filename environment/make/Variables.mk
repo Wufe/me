@@ -55,7 +55,7 @@ ifeq ($(QUIET),false)
 endif
 
 # External port
-PORT ?= NA
+PORT ?= 80
 # Command variables
 BUILD := NA
 RELEASE := NA
@@ -67,11 +67,12 @@ KILL := false
 WIPE := false
 REMOVE := true
 WATCH := NA
-DB_ROOT_PASS ?= NA
-DB_NAME ?= NA
-DB_USER ?= NA
-DB_PASS ?= NA
 MYSQL_ROOT_PASSWORD ?= NA
 MYSQL_DATABASE ?= NA
 MYSQL_USER ?= NA
 MYSQL_PASSWORD ?= NA
+
+DB_ROOT_PASS ?= $$(openssl rand -base64 32)
+DB_PASS ?= $$(openssl rand -base64 32)
+DB_NAME ?= app
+DB_USER ?= app

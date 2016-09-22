@@ -19,14 +19,6 @@ build-development:
 	@make build-docker-images-development
 
 build-production:
-	@if [ $(PORT) == NA ] || [ $(DB_ROOT_PASS) == NA ] || [ $(DB_USER) == NA ] || [ $(DB_NAME) == NA ] || [ $(DB_PASS) == NA ]; then \
-		bash -c '\
-			printf $(RED); \
-			echo "==> PORT, DB_ROOT_PASS, DB_USER, DB_NAME or DB_PASS environment variable not set."; \
-			printf $(NC); \
-		'; \
-		exit 2; \
-	fi
 	@make build-dist
 	@make bundle PRODUCTION=true
 	@make build-docker-images-production
@@ -44,16 +36,8 @@ build-docker-images-development:
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) build
 
 build-docker-images-production:
-	@if [ $(PORT) == NA ]; then \
-		bash -c '\
-			printf $(RED); \
-			echo "==> PORT environment variable not set."; \
-			printf $(NC); \
-		'; \
-		exit 2; \
-	fi
 	${INFO} "Building production docker images.."
-	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) build --pull
+	@bash -c 'PORT=$(PORT) DB_ROOT_PASS=$(DB_ROOT_PASS) DB_USER=$(DB_USER) DB_NAME=$(DB_NAME) DB_PASS=$(DB_PASS) docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) build --pull'
 
 build-dist:
 	${INFO} "Building dist folder.."

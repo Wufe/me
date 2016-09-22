@@ -11,33 +11,18 @@ In order to accomplish portability the project will use `docker` and `docker-com
 + `docker-compose 1.8.0+`  
 + `gnu make`  
 
-#### Installation
+#### Installation and Start 
 
-+ `make install`
-
-#### Start  
-
-+ `make development`  
++ `make start`  
 
 This will start a development environment
 
 #### `Makefile` commands
 
- + `make run`: install development environment and starts it.
- + `make reset`: alias for run.
- + `make install`: installs all dependencies and runs post-install scripts.
- + `make test`: starts development environment and runs tests.
- + `make wipe`: deletes docker containers and dangling items.
- + `make wipe ALL=true`: like wipe, but including environment and dependency folders.
- + `make development`: start development environment.
- + `make development WATCH=false`: start development environment without webpack build and watch. It is true by default.
- + `make development QUIET=true`: quiet mode.
- + `make development STOP=true`: stop containers. It will also remove them by default.
- + `make development STOP=true REMOVE=false`: stop containers but don't remove them.
- + `make development KILL=true`: kill containers and remove them by default.
- + `make development WIPE=true`: kill containers and remove them mandatorily.
  + `make watch`: uses started development environment to build code with webpack and watch.
  + `make start`: runs `make development` if default environment is development.
+ + `make development`: start development environment.
+ + `make production`: builds and starts production environment.
 
 ## Info  
 
