@@ -54,6 +54,8 @@ ifeq ($(QUIET),false)
 	printf $(NC)' VALUE
 endif
 
+# External port
+PORT ?= NA
 # Command variables
 BUILD := NA
 RELEASE := NA
@@ -65,6 +67,10 @@ KILL := false
 WIPE := false
 REMOVE := true
 WATCH := NA
+DB_ROOT_PASS ?= NA
+DB_NAME ?= NA
+DB_USER ?= NA
+DB_PASS ?= NA
 MYSQL_ROOT_PASSWORD ?= NA
 MYSQL_DATABASE ?= NA
 MYSQL_USER ?= NA

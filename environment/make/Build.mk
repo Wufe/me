@@ -19,9 +19,24 @@ build-development:
 	@make build-docker-images-development
 
 build-production:
+	@if [ $(PORT) == NA ] || [ $(DB_ROOT_PASS) == NA ] || [ $(DB_USER) == NA ] || [ $(DB_NAME) == NA ] || [ $(DB_PASS) == NA ]; then \
+		bash -c '\
+			printf $(RED); \
+			echo "==> PORT, DB_ROOT_PASS, DB_USER, DB_NAME or DB_PASS environment variable not set."; \
+			printf $(NC); \
+		'; \
+		exit 2; \
+	fi
 	@make build-dist
 	@make bundle PRODUCTION=true
 	@make build-docker-images-production
+	@make build-remove-dist
+
+build-remove-dist:
+	${INFO} "Deleting dist folder.."
+	@if [ -d "$(DIST_FOLDER)" ]; then \
+		rm -rf $(DIST_FOLDER); \
+	fi
 	
 
 build-docker-images-development:

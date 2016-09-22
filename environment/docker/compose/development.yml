@@ -1,6 +1,6 @@
 version: '2'
 services:
-  app:
+  data:
     image: busybox
     volumes:
       - ../../../src/backend:/app
@@ -13,12 +13,12 @@ services:
     volumes:
       - ../../../mysql_data:/var/lib/mysql
       - ../configuration/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-  php:
+  app:
     build:
       context: ../../../
-      dockerfile: environment/docker/images/php70/Dockerfile
+      dockerfile: environment/docker/images/common/php70/Dockerfile
     volumes_from:
-      - app
+      - data
     tty: true
     links:
       - db:db
@@ -26,28 +26,22 @@ services:
     env_file:
       - ../../dev.env
     command: php-fpm
-  nginx:
+  webserver:
     image: nginx
     volumes_from:
-      - app
+      - data
     volumes:
       - ../configuration/nginx/conf.d:/etc/nginx/conf.d
     links:
-      - php:php
+      - app:app
     ports:
       - 80:80
-  composer:
-    image: composer/composer
-    volumes_from:
-      - app
-    tty: true
-    entrypoint: composer install
   test:
     build:
       context: ../../../
-      dockerfile: environment/docker/images/php70/xdebug/Dockerfile
+      dockerfile: environment/docker/images/common/php70/xdebug/Dockerfile
     volumes_from:
-      - app
+      - data
     tty: true
     working_dir: /app
     command: /app/vendor/bin/phpunit tests

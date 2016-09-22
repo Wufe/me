@@ -18,16 +18,16 @@ start-development:
 	${INFO} "Starting database.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up probe > /dev/null
 	${INFO} "Starting web server.."
-	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d nginx
+	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d webserver
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Development environment ready."
 
 start-production:
-	@if [ $(PORT) == NA ] || [ $(MYSQL_ROOT_PASSWORD) == NA ] || [ $(MYSQL_USER) == NA ] || [ $(MYSQL_PASSWORD) == NA ] || [ $(MYSQL_DATABASE) == NA ]; then \
+	@if [ $(PORT) == NA ]; then \
 		bash -c '\
 			printf $(RED); \
-			echo "==> PORT, MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER or MYSQL_PASSWORD environment variable not set."; \
+			echo "==> PORT environment variable not set."; \
 			printf $(NC); \
 		'; \
 		exit 2; \
@@ -35,7 +35,7 @@ start-production:
 	${INFO} "Starting database.."
 	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up probe > /dev/null
 	${INFO} "Starting web server.."
-	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up -d nginx
+	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up -d webserver
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q php) php /app/artisan migrate > /dev/null || true
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Development environment ready."

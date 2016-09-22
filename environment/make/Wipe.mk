@@ -1,5 +1,3 @@
-.PHONY: wipe
-
 wipe:
 	@if [ $(DEVELOPMENT) == NA -a $(PRODUCTION) == NA ]; then \
 		if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
