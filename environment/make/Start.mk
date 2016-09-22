@@ -37,5 +37,5 @@ start-production:
 	${INFO} "Starting web server.."
 	${CMD} docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up -d webserver
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate > /dev/null || true
+	${CMD} docker exec -it $$(docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate --force > /dev/null || true
 	${SUCCESS} "Development environment ready."
