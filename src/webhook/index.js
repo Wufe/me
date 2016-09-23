@@ -28,16 +28,34 @@ app.use( xhub({
         ];
         let cmd = spawn( "git", args );
         cmd.stdout.on( 'data', ( data ) => {
-
+            console.log( data.toString() );
         });
         cmd.stderr.on( 'data', ( data ) => {
-
+            console.log( data.toString() );
         });
         cmd.on( 'error', ( err ) => {
             console.log( err );
         });
         cmd.on( 'close', ( code ) => {
-            console.log( "Done." );
+            
+            if( req.body.head_commit.nessage.match( /Production\./ ) ){
+                console.log( "Requires a production elaboration." );
+                cmd = spawn( "make", [ "production" ]);
+                cmd.stdout.on( 'data', ( data ) => {
+                    console.log( data.toString() );
+                });
+                cmd.stderr.on( 'data', ( data ) => {
+                    console.log( data.toString() );
+                });
+                cmd.on( 'error', ( err ) => {
+                    console.log( err );
+                });
+                cmd.on( 'close', ( code ) => {
+                    console.log( "Done refactoring." );
+                });
+            }else{
+                console.log( "Done." );
+            }
         });
 		res.send( "OK" );
 	}).get( `/webhook`, (req, res) => {
