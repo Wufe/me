@@ -59,7 +59,7 @@ endif
 DOCKER_RUN := docker run
 
 # External port
-PORT ?= 80
+PORT ?= 8082
 # Command variables
 BUILD := NA
 RELEASE := NA
