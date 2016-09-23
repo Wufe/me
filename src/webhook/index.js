@@ -16,6 +16,8 @@ let secret = process.env.WEBHOOK_SECRET;
 	app.post( `/webhook`, (req, res) => {
 		console.log( "Post request body:" );
 		console.log( req.body );
+		console.log( "\n\n\n\n\n\n\n\n\n\nSecret:" );
+		console.log( req.headers[ 'x-hub-signature' ] );
 		res.send( "Received." );
 	}).get( `/webhook`, (req, res) => {
 		console.log( "Received a get request." );
