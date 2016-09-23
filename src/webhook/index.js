@@ -28,6 +28,7 @@ app.use( xhub({
         ];
         let cmd = spawn( "git", args );
         cmd.stdout.on( 'data', ( data ) => {
+            console.log( data.toString() );
         });
         cmd.stderr.on( 'data', ( data ) => {
         });
