@@ -14,9 +14,7 @@ services:
       - ../../../mysql_data:/var/lib/mysql
       - ../configuration/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
   app:
-    build:
-      context: ../../../
-      dockerfile: environment/docker/images/common/php70/Dockerfile
+    image: kesshin/php70
     volumes_from:
       - data
     tty: true
@@ -37,9 +35,7 @@ services:
     ports:
       - 80:80
   test:
-    build:
-      context: ../../../
-      dockerfile: environment/docker/images/common/php70/xdebug/Dockerfile
+    image: kesshin/php70:xdebug
     volumes_from:
       - data
     tty: true

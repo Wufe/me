@@ -1,31 +1,9 @@
 @import "mixins/noselect";
 
-.background-image{
-	min-height: 100vh;
-	position: absolute;
-	width: 100vw;
-	background-image: url('../images/keyboard.jpg');
-	background-size: cover;
-	background-repeat: no-repeat;
-	z-index: 0;
-	filter: blur(5px);
-	overflow: hidden;
-}
-
-.background-image-overlay{
-	min-height: 100vh;
-	position: absolute;
-	width: 100vw;
-	z-index: 1;
-	background: rgba(0,0,0,0.3);
-	overflow: hidden;
-}
-
 .home-content{
-	position: absolute;
+	
 	min-height: 100vh;
 	width: 100vw;
-	z-index: 2;
 
 	.navbar{
 		position: absolute;
@@ -75,6 +53,7 @@
         line-height: 80px;
         padding: 0px 20px;
         font-size: 22px;
+        margin: 0px 10px;
     }
 
     @media (min-width: 0px) and (max-width: 767px){

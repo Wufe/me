@@ -4,8 +4,8 @@ export default ( location, callback, name ) => {
 		case "test":
 			moduleRequest = require( "bundle?name=test.route!../routes/test/" );
 			break;
-		case "home":
-			moduleRequest = require( "bundle?name=home.route!../routes/home/" );
+		case "index":
+			moduleRequest = require( "bundle?name=index.route!../routes/index/" );
 			break;
 	}
 	moduleRequest( module => {

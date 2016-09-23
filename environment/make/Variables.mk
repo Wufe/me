@@ -21,6 +21,8 @@ DEV_APP_COMPOSE_FILE := environment/docker/compose/development.yml
 PROD_COMMON_COMPOSE_FILE := environment/docker/compose/common.yml
 PROD_APP_COMPOSE_FILE := environment/docker/compose/production.yml
 
+WEBHOOK_COMPOSE_FILE := environment/docker/compose/webhook.yml
+
 COMPOSE_DEV_FILES := -f $(DEV_COMMON_COMPOSE_FILE) -f $(DEV_APP_COMPOSE_FILE)
 COMPOSE_PROD_FILES := -f $(PROD_COMMON_COMPOSE_FILE) -f $(PROD_APP_COMPOSE_FILE)
 
@@ -61,6 +63,8 @@ BUILD := NA
 RELEASE := NA
 DEVELOPMENT := NA
 PRODUCTION := NA
+WEBHOOK := NA
+WEBHOOK_SECRET ?= NA
 ALL := NA
 STOP := false
 KILL := false

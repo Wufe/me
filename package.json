@@ -9,7 +9,8 @@
     "pack": "npm run -s pack:development",
     "pack:development": "webpack -d --progress --color --config environment/webpack/dev.config.js",
     "pack:production": "webpack -d --progress --color --config environment/webpack/prod.config.js",
-    "pack:watch": "npm run pack -- --watch"
+    "pack:watch": "npm run pack:development -- --watch",
+    "webhook": "babel-node src/webhook/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,15 +33,20 @@
     "npm-run-all": "^3.1.0"
   },
   "dependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
     "babel-plugin-react-html-attrs": "^2.0.0",
     "babel-plugin-transform-class-properties": "^6.11.5",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.14.0",
+    "basic-auth-connect": "^1.0.0",
+    "body-parser": "^1.15.2",
     "bundle-loader": "^0.5.4",
     "css-loader": "^0.25.0",
     "eslint": "^3.5.0",

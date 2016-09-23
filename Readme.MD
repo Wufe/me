@@ -13,14 +13,14 @@ In order to accomplish portability the project will use `docker` and `docker-com
 
 #### Installation and Start 
 
-+ `make start`  
++ `make development`  
 
 This will start a development environment
 
 #### `Makefile` commands
 
  + `make watch`: uses started development environment to build code with webpack and watch.
- + `make start`: runs `make development` if default environment is development.
+ + `make start`: runs environment built with `make development`.
  + `make development`: start development environment.
  + `make production`: builds and starts production environment.
 

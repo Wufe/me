@@ -1,18 +1,23 @@
 start:
-	@if [ $(DEVELOPMENT) == NA -a $(PRODUCTION) == NA ]; then \
-		if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
-			make start-development; \
-		else \
-			make start-production; \
-		fi \
+	@if ! [ $(WEBHOOK) == NA ]; then \
+		make start-webhook; \
 	else \
-		if [ $(DEVELOPMENT) == true ]; then \
-			make start-development; \
-		fi; \
-		if [ $(PRODUCTION) == true ]; then \
-			make start-production; \
+		if [ $(DEVELOPMENT) == NA -a $(PRODUCTION) == NA ]; then \
+			if [ $(DEFAULT_ENVIRONMENT) == development ]; then \
+				make start-development; \
+			else \
+				make start-production; \
+			fi \
+		else \
+			if [ $(DEVELOPMENT) == true ]; then \
+				make start-development; \
+			fi; \
+			if [ $(PRODUCTION) == true ]; then \
+				make start-production; \
+			fi \
 		fi \
 	fi
+	
 
 start-development:
 	${INFO} "Starting database.."
@@ -31,3 +36,15 @@ start-production:
 	${INFO} "Migrating database.."
 	${CMD} docker exec -it $$(PORT=$(PORT) docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate --force || true
 	${SUCCESS} "Production environment ready."
+
+start-webhook:
+	@if [ $(WEBHOOK_SECRET) == NA ]; then \
+		bash -c '\
+			printf $(RED); \
+			echo "==> WEBHOOK_SECRET environment variable not set."; \
+			printf $(NC); \
+		'; \
+		exit 2; \
+	fi
+	${INFO} "Starting webhook.."
+	@bash -c 'WEBHOOK_SECRET=$(WEBHOOK_PORT) docker-compose -f $(WEBHOOK_COMPOSE_FILE) -p $(APP_NAME) up'

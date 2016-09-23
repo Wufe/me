@@ -1,0 +1,13 @@
+version: '2'
+services:
+  webhook:
+    image: node:wheezy
+    volumes:
+      - ../../../:/app
+    working_dir: /app
+    entrypoint: npm
+    command: run webhook -s
+    environment:
+      - WEBHOOK_SECRET
+    ports:
+      - 1341:1341
