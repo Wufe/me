@@ -25,7 +25,7 @@ start-development:
 	${INFO} "Starting web server.."
 	${CMD} docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) up -d webserver
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate > /dev/null || true
+	${CMD} docker exec $$(docker-compose $(COMPOSE_DEV_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate > /dev/null || true
 	${SUCCESS} "Development environment ready."
 
 start-production:
@@ -34,7 +34,7 @@ start-production:
 	${INFO} "Starting web server.."
 	@bash -c 'PORT=$(PORT) docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) up -d webserver'
 	${INFO} "Migrating database.."
-	${CMD} docker exec -it $$(PORT=$(PORT) docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate --force || true
+	${CMD} docker exec $$(PORT=$(PORT) docker-compose $(COMPOSE_PROD_FILES) -p $(APP_NAME) ps -q app) php /app/artisan migrate --force || true
 	${SUCCESS} "Production environment ready."
 
 start-webhook:
