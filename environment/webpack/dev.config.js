@@ -3,7 +3,7 @@ var path = require( 'path' );
 
 module.exports = {
     context: path.join( __dirname, '..', '..' ),
-    devtool: "inline-sourcemap", // null if not in debug
+    devtool: "eval", // null if not in debug
     entry: {
         main: "./src/frontend/index.js",
         vendor: [ 'react', 'react-dom', 'react-router', 'moment', 'jquery' ]
