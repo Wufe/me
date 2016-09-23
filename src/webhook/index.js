@@ -10,6 +10,8 @@ app.use( BodyParser.urlencoded({
 }));
 app.use( BodyParser.json() );
 
+let secret = process.env.WEBHOOK_SECRET;
+
 (() => {
 	app.post( `/webhook`, (req, res) => {
 		console.log( "Post request body:" );
