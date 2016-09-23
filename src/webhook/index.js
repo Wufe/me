@@ -39,7 +39,7 @@ app.use( xhub({
         cmd.on( 'close', ( code ) => {
             console.log( "Done." );
         });
-		req.send( "OK" );
+		res.send( "OK" );
 	}).get( `/webhook`, (req, res) => {
 		console.log( "Received a get request." );
 		res.send( "Try with a post request" );
