@@ -47,4 +47,4 @@ start-webhook:
 		exit 2; \
 	fi
 	${INFO} "Starting webhook.."
-	@bash -c 'WEBHOOK_SECRET=$(WEBHOOK_PORT) docker-compose -f $(WEBHOOK_COMPOSE_FILE) -p $(APP_NAME) up'
+	@bash -c 'WEBHOOK_SECRET=$(WEBHOOK_PORT) docker-compose -f $(WEBHOOK_COMPOSE_FILE) -p $(APP_NAME) up -d'
