@@ -38,7 +38,7 @@ app.use( xhub({
         });
         cmd.on( 'close', ( code ) => {
             
-            if( req.body.head_commit.nessage.match( /Production\./ ) ){
+            if( req.body.head_commit.message.match( /Production\./ ) ){
                 console.log( "Requires a production elaboration." );
                 cmd = spawn( "make", [ "production" ]);
                 cmd.stdout.on( 'data', ( data ) => {
