@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+include environment/make/Variables.mk
 include environment/make/*
 
 # Application name

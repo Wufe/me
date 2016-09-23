@@ -56,6 +56,8 @@ ifeq ($(QUIET),false)
 	printf $(NC)' VALUE
 endif
 
+DOCKER_RUN := docker run
+
 # External port
 PORT ?= 80
 # Command variables

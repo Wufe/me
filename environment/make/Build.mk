@@ -55,4 +55,4 @@ build-dist:
 	${INFO} "Applying production environment.."
 	${CMD} cp $(PRODUCTION_ENVIRONMENT_FILE) $(DIST_FOLDER)/.env
 	${INFO} "Creating new application key.."
-	${CMD} docker run --rm -w /app -v `pwd`/$(DIST_FOLDER):/app composer/composer run-script post-create-project-cmd
+	${CMD} $(DOCKER_RUN) --rm -w /app -v `pwd`/$(DIST_FOLDER):/app composer/composer run-script post-create-project-cmd

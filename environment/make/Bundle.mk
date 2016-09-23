@@ -16,8 +16,8 @@ bundle:
 
 bundle-development:
 	${INFO} "Building development frontend using webpack.."
-	${CMD} docker run --rm -w /app -v `pwd`:/app node:wheezy npm run pack:development -s
+	${CMD} $(DOCKER_RUN) --rm -w /app -v `pwd`:/app node:wheezy npm run pack:development -s
 
 bundle-production:
 	${INFO} "Building production frontend using webpack.."
-	${CMD} docker run --rm -w /app -v `pwd`:/app node:wheezy npm run pack:production -s
+	${CMD} $(DOCKER_RUN) --rm -w /app -v `pwd`:/app node:wheezy npm run pack:production -s
