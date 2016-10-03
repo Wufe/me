@@ -33,7 +33,7 @@ services:
     links:
       - app:app
     ports:
-      - 80:80
+      - 8082:80
   test:
     image: kesshin/php70:xdebug
     volumes_from:
