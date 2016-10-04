@@ -1,2 +1,0 @@
-#!/bin/bash
-docker exec -it me_app_1 php /app/artisan $@

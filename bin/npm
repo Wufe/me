@@ -1,2 +1,0 @@
-#!/bin/bash
-docker run -it --rm -w /app -v `pwd`:/app node:wheezy npm $@
