@@ -1,0 +1,115 @@
+@import "../../../assets/styles/mixins/noselect";
+
+.home-content{
+	
+	min-height: 100vh;
+	width: 100vw;
+
+	.navbar{
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+
+	.top-right{
+		position: absolute;
+		right: 10px;
+	}
+
+	.navbar-toggle{
+		margin-top: 20px;
+	}
+
+	.navbar-nav{
+		li{
+			a{
+				color: #121212;
+				padding: 0 25px;
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: .1rem;
+				text-decoration: none;
+				text-transform: uppercase;
+				height: 80px;
+				line-height: 80px;
+			}
+		}
+	}
+
+	.navbar-default{
+        background-color: rgba(255, 255, 255, 0.7);
+        border: 1px solid transparent;
+        color: #121212;
+        border-radius: 0px !important;
+        height: 80px;
+        line-height: 80px;
+    }
+
+    .navbar-default .navbar-brand{
+        color: #121212;
+    }
+
+    .navbar-brand{
+        line-height: 80px;
+        padding: 0px 20px;
+        font-size: 22px;
+        margin: 0px 10px;
+    }
+
+    @media (min-width: 0px) and (max-width: 767px){
+    	.navbar-collapse{
+	    	background: rgba(255, 255, 255,0.7);
+	    	margin: 17px -16px;
+	    	border: none;
+	    }
+    }
+
+    .centered-content{
+    	align-items: center;
+    	display: flex;
+    	justify-content: center;
+    	height: 100vh;
+
+    	.centered-container{
+
+    		.darker-content{
+    			color: white;
+	    		text-align: center;
+	    		padding: 20px;
+		    	background-color: rgba(0,0,0,0.7);
+		    	border: 1px solid #121212;
+		    	box-shadow: inset 0px 0px 5px rgba(0,0,0,0.4);
+		    	border-radius: 3px;
+
+				.centered-title{
+					font-size: 70px;
+					margin-bottom: 20px;
+					cursor: default;
+					@include noselect();
+				}
+
+				.centered-subtitle{
+					font-size: 25px;
+					cursor: default;
+					@include noselect();
+				}
+
+    		}
+
+    		.centered-info{
+    			color: white;
+    			text-align: center;
+    			padding: 20px;
+    			margin: 10px;
+    			text-transform: uppercase;
+    			clear: both;
+    			display: block;
+    			font-size: 20px;
+    		}
+    	}
+
+    	
+
+
+    }
+}

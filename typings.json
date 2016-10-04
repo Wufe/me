@@ -1,0 +1,14 @@
+{
+  "globalDependencies": {
+    "object-assign": "registry:dt/object-assign#4.0.1+20160819193737",
+    "react": "registry:dt/react#0.14.0+20160927082313",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-redux": "registry:dt/react-redux#4.4.0+20160908183346",
+    "react-router": "registry:dt/react-router#2.0.0+20160928130202",
+    "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "redux-immutable-state-invariant": "registry:dt/redux-immutable-state-invariant#1.2.0+20160316155526",
+    "redux-logger": "registry:dt/redux-logger#2.6.0+20160619033847",
+    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921"
+  }
+}

@@ -1,0 +1,22 @@
+version: '2'
+services:
+  data:
+    image: busybox
+    volumes:
+      - ../../:/app
+  app:
+    image: kesshin/php70:debug
+    volumes_from:
+      - data
+    tty: true
+    command: php-fpm
+  webserver:
+    image: nginx
+    links:
+      - app:app
+    volumes_from:
+      - data
+    volumes:
+      - ../configuration/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80

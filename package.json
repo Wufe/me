@@ -1,0 +1,45 @@
+{
+  "name": "me",
+  "version": "0.0.1",
+  "description": "Boilerplate for personal website",
+  "main": "index.js",
+  "scripts": {
+    "pack": "webpack --config environment/dev.webpack.js",
+    "pack:watch": "npm run -s pack -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wufe/me.git"
+  },
+  "author": "Simone Bembi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wufe/me/issues"
+  },
+  "homepage": "https://github.com/Wufe/me#readme",
+  "devDependencies": {
+    "bundle-loader": "^0.5.4",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "jquery": "^3.1.1",
+    "node-sass": "^3.10.1",
+    "object-assign": "^4.1.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.1",
+    "redux": "^3.6.0",
+    "redux-immutable-state-invariant": "^1.2.4",
+    "redux-logger": "^2.6.1",
+    "redux-router": "^2.1.2",
+    "redux-thunk": "^2.1.0",
+    "sass-loader": "^4.0.2",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2"
+  }
+}
