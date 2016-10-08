@@ -2,25 +2,9 @@ machine:
   timezone:
     Europe/Rome
 
-  docker:
-    version:
-      1.12.1
-
-  docker-compose:
-    version:
-      1.8.0
-
-  make:
-    version:
-      4.1
-
   node:
     version:
       6.3.1
-
-  npm:
-    version:
-      3.10.3
 
 dependencies:
   pre:
