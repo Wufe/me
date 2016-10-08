@@ -24,10 +24,4 @@ machine:
 
 dependencies:
   pre:
-    - npm i -g typings webpack
-    - npm i
-    - typings install
-    - cd src && composer install
-    - cd src && composer run-script post-root-package-install
-    - cd src && compsoer post-create-project-cmd
-    - webpack --config environment/dev.webpack.js
+    - make install
