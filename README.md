@@ -1,4 +1,7 @@
 # Me!
+
+[![CircleCI](https://circleci.com/gh/Wufe/me/tree/master.svg?style=svg)](https://circleci.com/gh/Wufe/me/tree/master)
+
 ### Personal Website Repository
 
 Coded using `Laravel 5.3`, `React 15.3`.  
