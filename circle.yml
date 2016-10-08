@@ -15,6 +15,8 @@ dependencies:
     - npm install --only=dev && ls node_modules
     - typings install
     - cd src && composer install --prefer-dist --no-interaction
+    - cd src && composer run-script post-root-package-install
+    - cd src && composer run-script post-create-project-cmd
 
   override:
     - make bundle
