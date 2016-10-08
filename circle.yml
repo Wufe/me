@@ -8,4 +8,6 @@ machine:
 
 dependencies:
   pre:
-    - make install
+    - npm install -g typings
+    - npm install
+    - typings install
