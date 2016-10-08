@@ -6,7 +6,7 @@ COMPOSE_FILE_PROD := environment/docker-compose/production.yml
 NODE := docker run -it --rm -v `pwd`:/app -w /app node:wheezy
 COMPOSER := docker run -it --rm -v `pwd`/src:/app -w /app composer/composer
 
-.PHONY: clean install development production start stop watch wipe
+.PHONY: clean install development production start stop test watch wipe
 
 clean:
 	rm -rf src/resources/assets/javascript/*
@@ -34,6 +34,9 @@ start:
 stop:
 	docker-compose -f $(COMPOSE_FILE_DEV) -p $(APP_NAME) ps -q | xargs docker stop --
 	docker-compose -f $(COMPOSE_FILE_PROD) -p $(APP_NAME) ps -q | xargs docker stop --
+
+test:
+	true
 
 watch:
 	$(NODE) /app/node_modules/.bin/webpack --config /app/environment/dev.webpack.js --watch
