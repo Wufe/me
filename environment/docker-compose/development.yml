@@ -3,7 +3,7 @@ services:
   data:
     image: busybox
     volumes:
-      - ../../:/app
+      - ../../:/app:rw
   app:
     image: kesshin/php70:debug
     volumes_from:

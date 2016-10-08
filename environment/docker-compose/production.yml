@@ -3,7 +3,7 @@ services:
   data:
     image: busybox
     volumes:
-      - ../../:/app
+      - ../../:/app:rw
   app:
     image: kesshin/php70:latest
     volumes_from:
@@ -11,6 +11,7 @@ services:
     tty: true
     environment:
       - APP_ENV=production
+      - APP_DEBUG=false
     command: php-fpm
   webserver:
     image: nginx

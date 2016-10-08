@@ -1,0 +1,33 @@
+machine:
+  timezone:
+    Europe/Rome
+
+  docker:
+    version:
+      1.12.1
+
+  docker-compose:
+    version:
+      1.8.0
+
+  make:
+    version:
+      4.1
+
+  node:
+    version:
+      6.3.1
+
+  npm:
+    version:
+      3.10.3
+
+dependencies:
+  pre:
+    - npm i -g typings webpack
+    - npm i
+    - typings install
+    - cd src && composer install
+    - cd src && composer run-script post-root-package-install
+    - cd src && compsoer post-create-project-cmd
+    - webpack --config environment/dev.webpack.js
