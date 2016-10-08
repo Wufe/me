@@ -6,7 +6,10 @@ COMPOSE_FILE_PROD := environment/docker-compose/production.yml
 NODE := docker run -it --rm -v `pwd`:/app -w /app node:wheezy
 COMPOSER := docker run -it --rm -v `pwd`/src:/app -w /app composer/composer
 
-.PHONY: clean install development production start stop test watch wipe
+.PHONY: bundle clean install development production start stop test watch wipe
+
+bundle:
+	webpack --config /environment/prod.webpack.js
 
 clean:
 	rm -rf src/resources/assets/javascript/*
@@ -36,7 +39,7 @@ stop:
 	docker-compose -f $(COMPOSE_FILE_PROD) -p $(APP_NAME) ps -q | xargs docker stop --
 
 test:
-	true
+	cd src && phpunit tests
 
 watch:
 	$(NODE) /app/node_modules/.bin/webpack --config /app/environment/dev.webpack.js --watch

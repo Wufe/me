@@ -8,11 +8,17 @@ machine:
 
 dependencies:
   pre:
-    - which composer
-    - which phpunit
-    - which npm
+    - pwd
     - ls
-    - npm install -g typings
-    - npm install
+    - npm install -g typings webpack
+    - npm install && ls node_modules
+    - npm install --only=dev && ls node_modules
     - typings install
     - cd src && composer install --prefer-dist --no-interaction
+
+  override:
+    - make bundle
+
+test:
+  override:
+    - make test
