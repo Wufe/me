@@ -8,8 +8,11 @@ machine:
 
 dependencies:
   pre:
+    - which composer
+    - which phpunit
+    - which npm
+    - ls
     - npm install -g typings
     - npm install
     - typings install
-    - wget https://getcomposer.org/installer && chmod +x installer && mv installer /usr/bin/composer
     - cd src && composer install --prefer-dist --no-interaction
