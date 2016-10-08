@@ -9,7 +9,7 @@ COMPOSER := docker run -it --rm -v `pwd`/src:/app -w /app composer/composer
 .PHONY: bundle clean install development production start stop test watch wipe
 
 bundle:
-	webpack --config /environment/prod.webpack.js
+	webpack --config environment/prod.webpack.js
 
 clean:
 	rm -rf src/resources/assets/javascript/*
