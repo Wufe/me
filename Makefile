@@ -41,9 +41,12 @@ build:
 	${CMD} mv dist/app/resources/assets dist/assets
 	${INFO} "Updating version.."
 	${CMD} npm version --no-git-tag-version minor 
-	${INFO} "Building docker image.."
-	${CMD} docker build -f environment/docker-images/app/Dockerfile -t $(APP_NAME):$(BUILD_VERSION) -t $(APP_NAME):latest .
-	${SUCCESS} "Successfully built $(BUILD_HASH) version $(BUILD_VERSION)."
+	${INFO} "Building docker app image.."
+	${CMD} docker build -f environment/docker-images/app/Dockerfile -t $(APP_NAME)-app:$(BUILD_VERSION) -t $(APP_NAME)-app:latest .
+	${SUCCESS} "Successfully built app `docker images $(APP_NAME)-app:latest -q` version $(BUILD_VERSION)."
+	${INFO} "Building docker web server image.."
+	${CMD} docker build -f environment/docker-images/webserver/Dockerfile -t $(APP_NAME)-webserver:$(BUILD_VERSION) -t $(APP_NAME)-webserver:latest .
+	${SUCESS} "Successfully built web server `docker images $(APP_NAME)-webserver:latest -q` version $(BUILD_VERSION)."
 	
 
 clean:

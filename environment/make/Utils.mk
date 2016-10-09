@@ -31,4 +31,3 @@ ifeq ($(QUIET),false)
 endif
 
 BUILD_VERSION := `npm run -s getversion`
-BUILD_HASH := `docker images $(APP_NAME):latest -q`
