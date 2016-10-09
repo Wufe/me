@@ -62,3 +62,6 @@ dist
 ### Bundled frontend files
 /src/resources/assets/javascript/*
 /src/resources/assets/images/*
+
+### Vendor frontend files
+/src/resources/assets/vendor/*

@@ -11,20 +11,22 @@ machine:
       7.0.7
 
 dependencies:
-  pre:
+  override:
     - pwd
-    - ls
+    - ls -al
     - npm install -g typings webpack
-    - npm install && ls node_modules
-    - npm install --only=dev && ls node_modules
-    - typings install
+    - npm install && ls -al node_modules
+    - typings install && ls -al typings/globals
     - cd src && composer install --prefer-dist --no-interaction
     - cd src && composer run-script post-root-package-install
     - cd src && composer run-script post-create-project-cmd
 
-  override:
-    - make bundle
-
 test:
   override:
     - make test
+
+deployment:
+  production:
+    branch: production
+    commands:
+      - make build

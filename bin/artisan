@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -it wufe-me_app_1 php /app/src/artisan $@
